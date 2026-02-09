@@ -1,0 +1,55 @@
+using UnityEngine;
+using System;
+
+public class InventoryManager : MonoBehaviour
+{
+    public static InventoryManager Instance;
+
+    public int maxSlots = 5;
+    public InventoryItem[] items;
+
+    public event Action OnInventoryChanged;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            items = new InventoryItem[maxSlots];
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public bool AddItem(InventoryItem newItem)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i] == null)
+            {
+                items[i] = newItem;
+                OnInventoryChanged?.Invoke();
+                return true;
+            }
+        }
+
+        Debug.Log("Inventory full");
+        return false;
+    }
+
+    public void RemoveItem(int index)
+    {
+        if (index < 0 || index >= items.Length) return;
+
+        items[index] = null;
+        OnInventoryChanged?.Invoke();
+    }
+
+    public InventoryItem GetItem(int index)
+    {
+        if (index < 0 || index >= items.Length) return null;
+        return items[index];
+    }
+}
