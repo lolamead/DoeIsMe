@@ -1,0 +1,14 @@
+using UnityEngine;
+
+public class TestPickup : MonoBehaviour
+{
+    public InventoryItem testItem;
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            InventoryManager.Instance.AddItem(testItem);
+        }
+    }
+}
