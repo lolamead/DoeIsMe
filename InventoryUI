@@ -1,0 +1,32 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class InventoryUI : MonoBehaviour
+{
+    public Image[] slotIcons;
+
+    void Start()
+    {
+        InventoryManager.Instance.OnInventoryChanged += UpdateUI;
+        UpdateUI();
+    }
+
+    void UpdateUI()
+    {
+        for (int i = 0; i < slotIcons.Length; i++)
+        {
+            InventoryItem item = InventoryManager.Instance.GetItem(i);
+
+            if (item != null)
+            {
+                slotIcons[i].sprite = item.icon;
+                slotIcons[i].color = Color.white;
+            }
+            else
+            {
+                slotIcons[i].sprite = null;
+                slotIcons[i].color = new Color(1, 1, 1, 0);
+            }
+        }
+    }
+}
