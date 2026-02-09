@@ -1,0 +1,50 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public enum Realm
+{
+    Physical,
+    Ghost
+}
+
+public class RealmManager : MonoBehaviour
+{
+    public static RealmManager Instance;
+
+    public Realm currentRealm = Realm.Physical;
+
+    [Header("Cameras")]
+    public Camera physicalCamera;
+    public Camera ghostCamera;
+
+    void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
+
+    void Start()
+    {
+        SetRealm(Realm.Physical);
+    }
+
+    public void SetRealm(Realm realm)
+    {
+        currentRealm = realm;
+
+        switch (realm)
+        {
+            case Realm.Physical:
+                ghostCamera.enabled = false;
+                break;
+
+            case Realm.Ghost:
+                ghostCamera.enabled = true;
+                break;
+        }
+    }
+}
+
