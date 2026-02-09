@@ -1,0 +1,48 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DoeMovement : MonoBehaviour
+{
+      public Transform detective;
+    public float moveSpeed = 5f;
+    public float maxDistance = 3f;
+
+    private Rigidbody2D rb;
+    private Vector2 movement;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    void Update()
+    {
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
+
+        movement = movement.normalized;
+    }
+
+    void FixedUpdate()
+    {
+        Vector2 targetPosition = rb.position + movement * moveSpeed * Time.fixedDeltaTime;
+
+        float distance = Vector2.Distance(targetPosition, detective.position);
+
+        if (distance <= maxDistance)
+        {
+            rb.MovePosition(targetPosition);
+        }
+        else
+        {
+    
+            Vector2 pullDir = ((Vector2)detective.position - rb.position).normalized;
+            rb.MovePosition(rb.position + pullDir * moveSpeed * 0.5f * Time.fixedDeltaTime);
+        }
+    }
+}
+
+
+
+
