@@ -1,0 +1,57 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public enum ControlledBody
+{
+    Detective,
+    Doe
+}
+
+public class PlayerSwapController : MonoBehaviour
+{
+    public GameObject detective;
+    public GameObject doe;
+
+    public ControlledBody currentBody;
+
+    void Start()
+    {
+        SetControl(ControlledBody.Detective);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            SwapBody();
+        }
+    }
+
+    void SwapBody()
+    {
+        if (currentBody == ControlledBody.Detective)
+            SetControl(ControlledBody.Doe);
+        else
+            SetControl(ControlledBody.Detective);
+    }
+
+    void SetControl(ControlledBody body)
+    {
+        currentBody = body;
+
+        detective.GetComponent<PlayerMovement2_5D>().enabled =
+            body == ControlledBody.Detective;
+
+        doe.GetComponent<DoeMovement>().enabled =
+            body == ControlledBody.Doe;
+
+            // REALM SWITCH
+    if (body == ControlledBody.Doe)
+        RealmManager.Instance.SetRealm(Realm.Ghost);
+    else
+        RealmManager.Instance.SetRealm(Realm.Physical);
+}
+
+    }
+
