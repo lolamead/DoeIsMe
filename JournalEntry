@@ -1,0 +1,21 @@
+using UnityEngine;
+using System.Collections.Generic;
+
+[CreateAssetMenu(menuName = "DoeIsMe/Journal Entry")]
+public class JournalEntry : ScriptableObject
+{
+    [Header("Basic Info")]
+    public string entryTitle;
+
+    [TextArea]
+    public string baseText;
+
+    [Header("Evidence-Driven Updates")]
+    public List<InventoryItem> requiredItems;
+    
+    [TextArea]
+    public string updatedText;
+
+    [HideInInspector]
+    public bool isUnlocked;
+}
