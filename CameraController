@@ -10,6 +10,28 @@ public class CameraController : MonoBehaviour
     public GameObject detectionCone;
     public Renderer coneRenderer;
 
+		public bool rotates;
+		public float rotateSpeed = 30f;
+		public float rotateAngle = 45f;
+
+private float currentAngle;
+private int direction = 1;
+
+void Update()
+{
+    if (rotates)
+    {
+        currentAngle += direction * rotateSpeed * Time.deltaTime;
+
+        if (Mathf.Abs(currentAngle) >= rotateAngle)
+            direction *= -1;
+
+        transform.localRotation = Quaternion.Euler(0, currentAngle, 0);
+    }
+
+    // Existing timer logic
+}
+
     private float timer;
 
     void Start()
