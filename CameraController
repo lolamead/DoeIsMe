@@ -1,0 +1,43 @@
+using UnityEngine;
+
+public class CameraController : MonoBehaviour
+{
+    public float activeTime = 3f;
+    public float inactiveTime = 2f;
+
+    public bool isActive = true;
+
+    public GameObject detectionCone;
+    public Renderer coneRenderer;
+
+    private float timer;
+
+    void Start()
+    {
+        timer = activeTime;
+        SetActiveState(true);
+    }
+
+    void Update()
+    {
+        timer -= Time.deltaTime;
+
+        if (timer <= 0)
+        {
+            isActive = !isActive;
+
+            if (isActive)
+                timer = activeTime;
+            else
+                timer = inactiveTime;
+
+            SetActiveState(isActive);
+        }
+    }
+
+    void SetActiveState(bool state)
+    {
+        isActive = state;
+        detectionCone.SetActive(state);
+    }
+}
