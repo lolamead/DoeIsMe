@@ -1,0 +1,19 @@
+using UnityEngine;
+
+public class StealthResetManager : MonoBehaviour
+{
+    public static StealthResetManager Instance;
+
+    public Transform resetPoint;
+    public GameObject detective;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    public void TriggerFail()
+    {
+        detective.transform.position = resetPoint.position;
+    }
+}
