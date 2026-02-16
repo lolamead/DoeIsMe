@@ -1,0 +1,21 @@
+using UnityEngine;
+
+public class CameraDetection : MonoBehaviour
+{
+    private CameraController cameraController;
+
+    void Awake()
+    {
+        cameraController = GetComponentInParent<CameraController>();
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (!cameraController.isActive) return;
+
+        if (other.CompareTag("Detective"))
+        {
+            StealthResetManager.Instance.TriggerFail();
+        }
+    }
+}
