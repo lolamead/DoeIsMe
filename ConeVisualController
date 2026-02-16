@@ -1,0 +1,22 @@
+using UnityEngine;
+
+public class ConeVisualController : MonoBehaviour
+{
+    public Material detectiveMat;
+    public Material ghostMat;
+
+    private Renderer rend;
+
+    void Awake()
+    {
+        rend = GetComponent<Renderer>();
+    }
+
+    void Update()
+    {
+        if (RealmManager.Instance.currentRealm == Realm.Physical)
+            rend.material = detectiveMat;
+        else
+            rend.material = ghostMat;
+    }
+}
